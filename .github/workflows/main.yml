@@ -1,1 +1,33 @@
+name: Build Android APK
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3-stable
+          use-dotnet: false
+
+      - name: Build APK
+        run: |
+          mkdir -p build
+          godot --headless --editor --quit
+          godot --headless --export-release Android build/assassin-the-lost-harbor.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: assassin-the-lost-harbor-apk
+          path: build/assassin-the-lost-harbor.apk
+          if-no-files-found: error
