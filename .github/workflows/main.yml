@@ -13,10 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Godot
-        uses: chickensoft-games/setup-godot@v2
-        with:
-          version: 4.5
+      - name: Setup Godot
+  uses: chickensoft-games/setup-godot@v2
+  with:
+    # Вместо 4.5 — полный поддерживаемый релиз
+    version: 4.5.1
           use-dotnet: false
 
       - name: Build APK
